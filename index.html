@@ -1,0 +1,40 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Consulta de CEP - ViaCEP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Consultar CEP</h1>
+
+    <form id="cep-form" class="form" autocomplete="off">
+      <label for="cep-input" class="label">Digite o CEP (somente números)</label>
+      <div class="row">
+        <input
+          id="cep-input"
+          name="cep"
+          type="text"
+          inputmode="numeric"
+          pattern="\d{5}-?\d{3}"
+          maxlength="9"
+          placeholder="Ex.: 01001-000 ou 01001000"
+          required
+        />
+        <button id="btn-search" type="submit">Buscar</button>
+      </div>
+      <small class="hint">Formato aceito: 8 dígitos (com ou sem hífen)</small>
+    </form>
+
+    <section id="result" class="result" aria-live="polite">
+      <p class="placeholder">Resultado aparecerá aqui</p>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
