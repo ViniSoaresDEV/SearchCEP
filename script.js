@@ -1,22 +1,25 @@
 const cepForm = document.querySelector("form#cep-form");
 const submitButton = document.querySelector("button#btn-search");
 const result = document.querySelector("section#result");
+const cepInput = document.querySelector("input#cep-input");
 
 
 cepForm.addEventListener('submit', (e)=>{
     e.preventDefault();
-    const cepInput = document.querySelector("input#cep-input").value;
 
-    requestCEP(cepInput);
+    requestCEP(cepInput.value);
 });
 
 async function requestCEP(cep) {
+
+    showMessage("Carregando...");
+
     try{
         const url = `https://viacep.com.br/ws/${cep}/json/`;
         const response = await fetch(url);
         const json = await response.json();
 
-        filterCEPData(json);
+        showCEP(json);
 
     }catch(error){
         showMessage("Erro ao encontrar CEP. Tente novamente.");
@@ -25,24 +28,15 @@ async function requestCEP(cep) {
 }
 
 
-function filterCEPData(json){
-    const logradouro = json.logradouro;
-    const bairro = json.bairro;
-    const localidade = json.localidade;
-    const estado = json.estado;
+function showCEP(json){
 
-    showCEP(logradouro, bairro, localidade, estado);
-}
-
-function showCEP(logradouro, bairro, localidade, estado){
-
-    result.innerHTML = '';
+    result.textContent = '';
 
     const fields = [
-        `<b>Logradouro: </b>` + logradouro,
-        `<b>Bairro: </b>` + bairro,
-        `<b>Localidade: </b>` + localidade,
-        `<b>Estado: </b>` + estado,
+        `<b>Logradouro: </b>` + json.logradouro,
+        `<b>Bairro: </b>` + json.bairro,
+        `<b>Localidade: </b>` + json.localidade,
+        `<b>Estado: </b>` + json.uf,
     ];
 
     fields.forEach((value)=>{
@@ -54,5 +48,5 @@ function showCEP(logradouro, bairro, localidade, estado){
 
 
 function showMessage(msg){
-    result.innerHTML = msg;
+    result.textContent = msg;
 }
